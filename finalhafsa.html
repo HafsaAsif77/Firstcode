@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResumeForge</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Lato:wght@300;400;700&family=Merriweather:wght@400;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f13;--s1:#1a1a23;--s2:#22222e;--s3:#2a2a38;
+  --bd:#2e2e3e;--ac:#e8c97e;--tx:#f0ede8;--mu:#7a7a90;
+  --rd:#e87e7e;--gn:#7ee8a2;
+}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);overflow:hidden}
+/* ── NAV ── */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 1.4rem;height:58px;background:var(--s1);border-bottom:1px solid var(--bd);flex-shrink:0;gap:.8rem}
+.logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:var(--ac);white-space:nowrap}
+.logo b{color:var(--tx);font-weight:900}
+.tabs{display:flex;gap:3px;background:var(--bg);border-radius:9px;padding:3px}
+.tab{padding:5px 16px;border:none;background:transparent;color:var(--mu);cursor:pointer;border-radius:6px;font:600 .82rem 'DM Sans',sans-serif;transition:all .18s}
+.tab.on{background:var(--ac);color:#1a1208}
+.tab:not(.on):hover{color:var(--tx)}
+/* ── LAYOUT ── */
+.app{display:flex;flex-direction:column;height:100vh}
+.body{display:flex;flex:1;overflow:hidden}
+/* ── PANEL ── */
+.panel{width:310px;min-width:310px;background:var(--s1);border-right:1px solid var(--bd);overflow-y:auto;padding:1rem .9rem;display:flex;flex-direction:column;gap:.9rem}
+.panel::-webkit-scrollbar{width:4px}
+.panel::-webkit-scrollbar-thumb{background:var(--bd);border-radius:4px}
+.pt{font-size:.65rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--mu);padding-bottom:.3rem;border-bottom:1px solid var(--bd)}
+.ps{display:flex;flex-direction:column;gap:.55rem}
+.pdiv{height:1px;background:var(--bd);margin:.05rem 0}
+/* form controls */
+label{font-size:.78rem;color:var(--mu);display:block;margin-bottom:2px}
+input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:.4rem .55rem;border-radius:6px;font:inherit;font-size:.81rem;outline:none;transition:border-color .18s}
+input:focus,select:focus,textarea:focus{border-color:var(--ac)}
+textarea{resize:vertical;min-height:62px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+input[type=color]{width:32px;height:26px;border:1px solid var(--bd);border-radius:5px;padding:2px;background:var(--s2);cursor:pointer}
+.cr{display:flex;align-items:center;gap:.45rem}
+.cr label{margin:0;flex:1}
+input[type=range]{width:100%;accent-color:var(--ac)}
+.rr{display:flex;align-items:center;gap:.5rem}
+.rr input{flex:1}
+.rv{font-size:.75rem;color:var(--ac);min-width:32px;text-align:right}
+/* buttons */
+.btn{padding:.42rem 1rem;border:none;border-radius:7px;cursor:pointer;font:600 .83rem 'DM Sans',sans-serif;transition:all .18s}
+.ba{background:var(--ac);color:#1a1208}.ba:hover{filter:brightness(1.1)}
+.bo{background:transparent;border:1px solid var(--bd);color:var(--tx)}.bo:hover{border-color:var(--ac);color:var(--ac)}
+.bsm{padding:.24rem .6rem;font-size:.75rem}
+.bblk{width:100%}
+/* font pills */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:.38rem}
+.fp{padding:.36rem;border:1px solid var(--bd);border-radius:6px;background:var(--s2);color:var(--tx);cursor:pointer;font-size:.76rem;text-align:center;transition:all .18s}
+.fp:hover,.fp.on{border-color:var(--ac);color:var(--ac);background:rgba(232,201,126,.08)}
+/* template grid */
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:.38rem}
+.tp{padding:.38rem .25rem;border:2px solid var(--bd);border-radius:7px;background:var(--s2);color:var(--tx);cursor:pointer;font-size:.68rem;text-align:center;transition:all .18s;font-family:'DM Sans',sans-serif}
+.tp.on{border-color:var(--ac);color:var(--ac)}
+.tico{font-size:1rem;margin-bottom:1px}
+/* cat tabs */
+.ctabs{display:flex;flex-wrap:wrap;gap:.25rem}
+.ctab{padding:.2rem .5rem;border:1px solid var(--bd);border-radius:20px;background:transparent;color:var(--mu);font-size:.68rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s}
+.ctab.on{border-color:var(--ac);color:var(--ac);background:rgba(232,201,126,.08)}
+/* skill chips */
+.chips{display:flex;flex-wrap:wrap;gap:.3rem;min-height:22px}
+.chip{display:flex;align-items:center;gap:.25rem;background:var(--s3);border:1px solid var(--bd);border-radius:20px;padding:.18rem .45rem .18rem .55rem;font-size:.74rem}
+.chip .cc{font-size:.6rem;color:var(--ac);opacity:.9}
+.chip .xb{background:none;border:none;color:var(--mu);cursor:pointer;font-size:.78rem;padding:0;line-height:1;transition:color .15s}
+.chip .xb:hover{color:var(--rd)}
+.ar{display:flex;gap:.35rem}
+.ar input{flex:1}
+.ql{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.15rem}
+.qb{padding:.18rem .5rem;border:1px solid var(--bd);border-radius:20px;background:var(--s2);color:var(--mu);font-size:.68rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s}
+.qb:hover{border-color:var(--ac);color:var(--ac)}
+/* lang rows */
+.ll{display:flex;flex-direction:column;gap:.32rem}
+.lr{display:flex;align-items:center;gap:.35rem;background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:.34rem .5rem}
+.lr span{flex:1;font-size:.8rem}
+.lr select{background:var(--s3);border:1px solid var(--bd);color:var(--tx);border-radius:5px;padding:.18rem .34rem;font-size:.72rem;font-family:'DM Sans',sans-serif;outline:none;width:auto}
+.lx{background:none;border:none;color:var(--mu);cursor:pointer;font-size:.85rem;padding:0;transition:color .15s}
+.lx:hover{color:var(--rd)}
+/* add entry btn */
+.aeb{background:transparent;border:1px dashed var(--bd);color:var(--mu);width:100%;padding:.36rem;border-radius:6px;font-size:.77rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;margin-top:.15rem}
+.aeb:hover{border-color:var(--ac);color:var(--ac)}
+/* ── PREVIEW ── */
+.preview{flex:1;background:#ccc9c0;overflow-y:auto;display:flex;align-items:flex-start;justify-content:center;padding:1.8rem 1.2rem}
+/* ── RESUME PAPER ── */
+.paper{background:#fff;width:750px;min-height:1060px;box-shadow:0 18px 70px rgba(0,0,0,.35);padding:56px 60px;font-family:'Playfair Display',serif}
+.rn{font-size:2.2rem;font-weight:700;line-height:1.1;margin-bottom:.15rem;color:#1a3a5c}
+.rt{font-size:.95rem;opacity:.7;margin-bottom:.7rem}
+.rc{font-size:.77rem;display:flex;flex-wrap:wrap;gap:.2rem .75rem;padding-bottom:.8rem;margin-bottom:.9rem;border-bottom:2px solid #1a3a5c;opacity:.65}
+.rs{margin-bottom:1.3rem}
+.rst{font-size:.66rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:.48rem;padding-bottom:.22rem;border-bottom:1px solid #1a3a5c;color:#1a3a5c;opacity:.52}
+.re{margin-bottom:.75rem}
+.reh{display:flex;justify-content:space-between;align-items:baseline}
+.ret{font-weight:600;font-size:.9rem}
+.red{font-size:.73rem;opacity:.55}
+.res{font-size:.77rem;opacity:.6;margin-bottom:.22rem;font-style:italic}
+.reb{font-size:.79rem;line-height:1.58;opacity:.76}
+.rsk{display:flex;flex-wrap:wrap;gap:.32rem}
+.rskl{padding:.18rem .58rem;border-radius:20px;font-size:.7rem;font-weight:500;border:1px solid #1a3a5c;color:#1a3a5c;opacity:.8}
+.rlw{display:flex;flex-wrap:wrap;gap:.45rem 1.4rem}
+.rli{display:flex;flex-direction:column;gap:.1rem;font-size:.79rem}
+.rln{font-weight:600}
+.rll{font-size:.68rem;opacity:.55}
+.rld{display:flex;gap:2px;margin-top:2px}
+.rldot{width:7px;height:7px;border-radius:50%;border:1.5px solid #1a3a5c;opacity:.25}
+.rldot.f{opacity:1;background:#1a3a5c}
+[contenteditable]{outline:none;cursor:text;border-radius:2px}
+[contenteditable]:hover{background:rgba(0,80,255,.05)}
+[contenteditable]:focus{background:rgba(0,80,255,.09)}
+/* ── JOBS PAGE ── */
+.jpage{flex:1;overflow-y:auto;padding:1.8rem 1.5rem;display:flex;flex-direction:column;gap:1.5rem}
+.jh{text-align:center}
+.jh h2{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--ac);margin-bottom:.35rem}
+.jh p{color:var(--mu);font-size:.88rem}
+.abox{background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:1.4rem;max-width:800px;margin:0 auto;width:100%}
+.abox p{font-size:.85rem;color:var(--mu);line-height:1.6;margin-bottom:.8rem}
+.jgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:.9rem;max-width:1060px;margin:0 auto;width:100%}
+.jcard{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:1.1rem;display:flex;flex-direction:column;gap:.55rem;transition:all .22s;animation:up .35s ease both}
+.jcard:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:0 10px 36px rgba(0,0,0,.28)}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.jct{display:flex;justify-content:space-between;align-items:flex-start;gap:.4rem}
+.jtl{font-weight:700;font-size:.92rem}
+.jco{font-size:.77rem;color:var(--mu)}
+.mb{background:linear-gradient(135deg,var(--ac),#d4a855);color:#1a1208;font-weight:700;font-size:.7rem;padding:.22rem .55rem;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.jtags{display:flex;flex-wrap:wrap;gap:.25rem}
+.jtag{background:var(--s2);border:1px solid var(--bd);border-radius:20px;padding:.16rem .48rem;font-size:.67rem;color:var(--mu)}
+.jdesc{font-size:.77rem;color:var(--mu);line-height:1.52}
+.jmeta{display:flex;gap:.6rem;font-size:.73rem;color:var(--mu);flex-wrap:wrap}
+.apb{background:transparent;border:1px solid var(--ac);color:var(--ac);padding:.36rem;border-radius:7px;font-size:.77rem;font-weight:600;cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif;width:100%}
+.apb:hover{background:var(--ac);color:#1a1208}
+.spin-box{display:flex;flex-direction:column;align-items:center;gap:.9rem;padding:2.5rem;color:var(--mu);width:100%;max-width:800px;margin:0 auto}
+.spin{width:32px;height:32px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--s1);border:1px solid var(--ac);color:var(--tx);padding:.65rem 1.2rem;border-radius:9px;font-size:.82rem;z-index:999;display:none;animation:ti .25s ease}
+.toast.on{display:block}
+@keyframes ti{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+/* ── RESPONSIVE ── */
+@media(max-width:980px){.panel{width:255px;min-width:255px}.paper{width:560px;padding:38px 42px}}
+@media(max-width:700px){
+  html,body{overflow:auto}
+  .body{flex-direction:column;overflow:visible}
+  .panel{width:100%;min-width:unset;max-height:380px}
+  .preview{padding:.8rem .3rem}
+  .paper{width:100%;min-width:0;padding:24px 20px;font-size:90%}
+  #page-builder{height:auto}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo">Resume<b>Forge</b></div>
+  <div class="tabs">
+    <button class="tab on" id="tab-b" onclick="goPage('builder')">✏️ Builder</button>
+    <button class="tab" id="tab-j" onclick="goPage('jobs')">💼 Job Match</button>
+  </div>
+  <button class="btn ba bsm" onclick="exportPDF()">⬇ Export PDF</button>
+</nav>
+
+<div class="body">
+
+<!-- ══════════════════ BUILDER ══════════════════ -->
+<div id="page-builder" style="display:flex;flex:1;overflow:hidden">
+
+  <!-- LEFT PANEL -->
+  <div class="panel">
+
+    <div class="ps">
+      <div class="pt">Personal Info</div>
+      <div><label>Full Name</label><input type="text" id="f-name" value="Alexandra Chen" oninput="sync('name',this.value)"></div>
+      <div><label>Job Title</label><input type="text" id="f-title" value="Senior Product Designer" oninput="sync('title',this.value)"></div>
+      <div class="g2">
+        <div><label>Email</label><input type="email" id="f-email" value="alex@email.com" oninput="sync('email',this.value)"></div>
+        <div><label>Phone</label><input type="tel" id="f-phone" value="+1 555 234 5678" oninput="sync('phone',this.value)"></div>
+      </div>
+      <div class="g2">
+        <div><label>Location</label><input type="text" id="f-loc" value="San Francisco, CA" oninput="sync('loc',this.value)"></div>
+        <div><label>Website</label><input type="text" id="f-link" value="linkedin.com/in/alex" oninput="sync('link',this.value)"></div>
+      </div>
+      <div><label>Summary</label>
+        <textarea id="f-sum" oninput="sync('sum',this.value)">Award-winning product designer with 8+ years crafting intuitive digital experiences for Fortune 500 companies. Led cross-functional teams to ship products used by millions.</textarea>
+      </div>
+    </div>
+
+    <div class="pdiv"></div>
+
+    <!-- SKILLS -->
+    <div class="ps">
+      <div class="pt">Skills Manager</div>
+      <div class="ctabs" id="ctabs">
+        <button class="ctab on" data-cat="All" onclick="setCat(this)">All</button>
+        <button class="ctab" data-cat="Technical" onclick="setCat(this)">Technical</button>
+        <button class="ctab" data-cat="Design" onclick="setCat(this)">Design</button>
+        <button class="ctab" data-cat="Soft" onclick="setCat(this)">Soft</button>
+        <button class="ctab" data-cat="Tools" onclick="setCat(this)">Tools</button>
+      </div>
+      <div class="chips" id="chip-list"></div>
+      <div class="ar">
+        <input type="text" id="sk-inp" placeholder="Add skill…" onkeydown="if(event.key==='Enter')addSkill()">
+        <select id="sk-cat"><option>Technical</option><option>Design</option><option>Soft</option><option>Tools</option></select>
+        <button class="btn ba bsm" onclick="addSkill()">+</button>
+      </div>
+      <div>
+        <label style="font-size:.68rem;margin-bottom:3px">Quick add:</label>
+        <div class="ql" id="qskills"></div>
+      </div>
+    </div>
+
+    <div class="pdiv"></div>
+
+    <!-- LANGUAGES -->
+    <div class="ps">
+      <div class="pt">Languages</div>
+      <div class="ll" id="lang-list"></div>
+      <div class="ar">
+        <input type="text" id="ln-inp" placeholder="Language…" onkeydown="if(event.key==='Enter')addLang()">
+        <select id="ln-lvl"><option>Native</option><option>Fluent</option><option>Advanced</option><option>Intermediate</option><option>Basic</option></select>
+        <button class="btn ba bsm" onclick="addLang()">+</button>
+      </div>
+      <div>
+        <label style="font-size:.68rem;margin-bottom:3px">Quick add:</label>
+        <div class="ql" id="qlang"></div>
+      </div>
+    </div>
+
+    <div class="pdiv"></div>
+
+    <!-- TYPOGRAPHY -->
+    <div class="ps">
+      <div class="pt">Typography</div>
+      <div class="fg">
+        <button class="fp on" data-f="Playfair Display" onclick="setFont(this)" style="font-family:'Playfair Display'">Playfair</button>
+        <button class="fp" data-f="DM Sans" onclick="setFont(this)" style="font-family:'DM Sans'">DM Sans</button>
+        <button class="fp" data-f="Space Mono" onclick="setFont(this)" style="font-family:'Space Mono'">Mono</button>
+        <button class="fp" data-f="Lato" onclick="setFont(this)" style="font-family:'Lato'">Lato</button>
+        <button class="fp" data-f="Merriweather" onclick="setFont(this)" style="font-family:'Merriweather'">Merriweather</button>
+        <button class="fp" data-f="Raleway" onclick="setFont(this)" style="font-family:'Raleway'">Raleway</button>
+      </div>
+      <div><label>Name Size</label>
+        <div class="rr"><input type="range" min="22" max="54" value="35" oninput="P('r-name','fontSize',this.value+'px');this.nextElementSibling.textContent=this.value+'px'"><span class="rv">35px</span></div>
+      </div>
+      <div><label>Body Size</label>
+        <div class="rr"><input type="range" min="9" max="16" value="13" step="0.5" oninput="setBodySz(this.value);this.nextElementSibling.textContent=this.value+'px'"><span class="rv">13px</span></div>
+      </div>
+      <div><label>Line Height</label>
+        <div class="rr"><input type="range" min="1.2" max="2.2" value="1.6" step="0.1" oninput="paper().style.lineHeight=this.value;this.nextElementSibling.textContent=this.value"><span class="rv">1.6</span></div>
+      </div>
+    </div>
+
+    <div class="pdiv"></div>
+
+    <!-- COLORS -->
+    <div class="ps">
+      <div class="pt">Colors</div>
+      <div class="cr"><label>Accent / Headings</label><input type="color" id="c-ac" value="#1a3a5c" oninput="setAccent(this.value)"></div>
+      <div class="cr"><label>Body Text</label><input type="color" id="c-tx" value="#1a1a1a" oninput="paper().style.color=this.value"></div>
+      <div class="cr"><label>Background</label><input type="color" id="c-bg" value="#ffffff" oninput="paper().style.background=this.value"></div>
+      <div class="cr"><label>Skill Tags</label><input type="color" id="c-sk" value="#1a3a5c" oninput="setTagColor(this.value)"></div>
+    </div>
+
+    <div class="pdiv"></div>
+
+    <!-- TEMPLATES -->
+    <div class="ps">
+      <div class="pt">Templates</div>
+      <div class="tg">
+        <button class="tp on" onclick="applyTpl('classic',this)"><div class="tico">🔷</div>Classic</button>
+        <button class="tp" onclick="applyTpl('modern',this)"><div class="tico">🟢</div>Modern</button>
+        <button class="tp" onclick="applyTpl('elegant',this)"><div class="tico">💜</div>Elegant</button>
+        <button class="tp" onclick="applyTpl('bold',this)"><div class="tico">🔴</div>Bold</button>
+        <button class="tp" onclick="applyTpl('minimal',this)"><div class="tico">⬛</div>Minimal</button>
+        <button class="tp" onclick="applyTpl('creative',this)"><div class="tico">🟠</div>Creative</button>
+      </div>
+    </div>
+
+    <div class="pdiv"></div>
+
+    <!-- LAYOUT -->
+    <div class="ps">
+      <div class="pt">Layout</div>
+      <div><label>Page Padding</label>
+        <div class="rr"><input type="range" min="20" max="88" value="56" oninput="paper().style.padding=this.value+'px '+(+this.value+4)+'px';this.nextElementSibling.textContent=this.value+'px'"><span class="rv">56px</span></div>
+      </div>
+      <div><label>Section Spacing</label>
+        <div class="rr"><input type="range" min="0.4" max="3" value="1.3" step="0.1" oninput="[].forEach.call(paper().querySelectorAll('.rs'),e=>e.style.marginBottom=this.value+'rem');this.nextElementSibling.textContent=this.value+'rem'"><span class="rv">1.3rem</span></div>
+      </div>
+    </div>
+
+    <button class="btn ba bblk" style="margin-top:.2rem" onclick="goPage('jobs')">🔍 Find Matching Jobs →</button>
+    <button class="btn bo bblk" onclick="if(confirm('Reset everything?'))location.reload()">↺ Reset</button>
+  </div>
+
+  <!-- RESUME PREVIEW -->
+  <div class="preview">
+    <div class="paper" id="paper">
+      <div class="rn" id="r-name" contenteditable>Alexandra Chen</div>
+      <div class="rt" id="r-title" contenteditable>Senior Product Designer</div>
+      <div class="rc">
+        <span id="r-email" contenteditable>alex@email.com</span>
+        <span id="r-phone" contenteditable>+1 555 234 5678</span>
+        <span id="r-loc" contenteditable>San Francisco, CA</span>
+        <span id="r-link" contenteditable>linkedin.com/in/alex</span>
+      </div>
+
+      <div class="rs">
+        <div class="rst">Summary</div>
+        <div class="reb" id="r-sum" contenteditable>Award-winning product designer with 8+ years crafting intuitive digital experiences for Fortune 500 companies. Led cross-functional teams to ship products used by millions.</div>
+      </div>
+
+      <div class="rs" id="sec-exp">
+        <div class="rst">Work Experience</div>
+        <div class="re">
+          <div class="reh"><div class="ret" contenteditable>Lead Product Designer</div><div class="red" contenteditable>2021 — Present</div></div>
+          <div class="res" contenteditable>Dropbox · Full-time · San Francisco, CA</div>
+          <div class="reb" contenteditable>Led design of core collaboration features adopted by 700M+ users. Built design system across 12 product teams. Mentored 6 designers and improved NPS by 22%.</div>
+        </div>
+        <div class="re">
+          <div class="reh"><div class="ret" contenteditable>Senior UX Designer</div><div class="red" contenteditable>2018 — 2021</div></div>
+          <div class="res" contenteditable>Airbnb · Full-time · San Francisco, CA</div>
+          <div class="reb" contenteditable>Redesigned host onboarding, reducing drop-off by 34%. Ran 80+ user interviews. Shipped Wishlist redesign to 100M+ users globally.</div>
+        </div>
+        <div class="re">
+          <div class="reh"><div class="ret" contenteditable>UX Designer</div><div class="red" contenteditable>2015 — 2018</div></div>
+          <div class="res" contenteditable>Adobe · Full-time · San Jose, CA</div>
+          <div class="reb" contenteditable>Designed key features for Adobe XD at launch. Built component library for 30+ designers. Cut engineering implementation time by 40%.</div>
+        </div>
+        <button class="aeb" onclick="addExp()">+ Add Experience</button>
+      </div>
+
+      <div class="rs" id="sec-edu">
+        <div class="rst">Education</div>
+        <div class="re">
+          <div class="reh"><div class="ret" contenteditable>B.A. Interaction Design</div><div class="red" contenteditable>2011 — 2015</div></div>
+          <div class="res" contenteditable>California College of the Arts · San Francisco, CA</div>
+          <div class="reb" contenteditable>Graduated summa cum laude. Dean's List all semesters.</div>
+        </div>
+        <button class="aeb" onclick="addEdu()">+ Add Education</button>
+      </div>
+
+      <div class="rs">
+        <div class="rst">Skills</div>
+        <div class="rsk" id="r-skills"></div>
+      </div>
+
+      <div class="rs" id="r-lang-sec" style="display:none">
+        <div class="rst">Languages</div>
+        <div class="rlw" id="r-langs"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ JOBS ══════════════════ -->
+<div id="page-jobs" style="display:none;flex:1">
+  <div class="jpage">
+    <div class="jh">
+      <h2>AI Job Matching</h2>
+      <p>AI reads your resume and finds the best-fit jobs for your skills and experience.</p>
+    </div>
+    <div class="abox">
+      <p id="ap">Your resume is ready. Click below to analyze and find matching roles.</p>
+      <button class="btn ba" onclick="findJobs()" id="abtn">🤖 Analyze &amp; Find Jobs</button>
+    </div>
+    <div id="jout"></div>
+  </div>
+</div>
+
+</div><!-- /body -->
+</div><!-- /app -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────
+const SKILLS_DB = [
+  {n:'Figma',c:'Design'},{n:'UX Research',c:'Design'},{n:'Prototyping',c:'Design'},
+  {n:'Design Systems',c:'Design'},{n:'Wireframing',c:'Design'},{n:'A/B Testing',c:'Design'},
+  {n:'React',c:'Technical'},{n:'JavaScript',c:'Technical'},{n:'TypeScript',c:'Technical'},
+  {n:'Python',c:'Technical'},{n:'Node.js',c:'Technical'},{n:'SQL',c:'Technical'},
+  {n:'AWS',c:'Technical'},{n:'Docker',c:'Technical'},{n:'Git',c:'Technical'},
+  {n:'Agile',c:'Soft'},{n:'Leadership',c:'Soft'},{n:'Communication',c:'Soft'},
+  {n:'Problem Solving',c:'Soft'},{n:'Mentoring',c:'Soft'},{n:'Public Speaking',c:'Soft'},
+  {n:'Jira',c:'Tools'},{n:'Notion',c:'Tools'},{n:'Miro',c:'Tools'},
+  {n:'GitHub',c:'Tools'},{n:'VS Code',c:'Tools'},{n:'Slack',c:'Tools'},
+];
+const LANGS_QK = ['English','Spanish','French','German','Mandarin','Arabic','Hindi','Portuguese','Japanese','Korean'];
+const LVL_DOTS = {Native:5,Fluent:5,Advanced:4,Intermediate:3,Basic:2};
+const TPLS = {
+  classic: {f:'Playfair Display',ac:'#1a3a5c',tx:'#1a1a1a',bg:'#ffffff',sk:'#1a3a5c'},
+  modern:  {f:'DM Sans',ac:'#2d6a4f',tx:'#1c1c1c',bg:'#f9fafb',sk:'#2d6a4f'},
+  elegant: {f:'Lato',ac:'#6b2d8b',tx:'#1a1a1a',bg:'#fdfbff',sk:'#6b2d8b'},
+  bold:    {f:'Merriweather',ac:'#c0392b',tx:'#111',bg:'#fffdf9',sk:'#c0392b'},
+  minimal: {f:'Raleway',ac:'#333',tx:'#222',bg:'#ffffff',sk:'#555'},
+  creative:{f:'Space Mono',ac:'#d35400',tx:'#1a1a1a',bg:'#fffef8',sk:'#d35400'},
+};
+
+let skills = SKILLS_DB.slice(0,8).map(s=>({...s}));
+let langs  = [{n:'English',l:'Native'},{n:'Mandarin',l:'Fluent'}];
+let catF   = 'All';
+let accent = '#1a3a5c';
+
+// ── HELPERS ───────────────────────────────────────
+const paper  = () => document.getElementById('paper');
+const el     = id => document.getElementById(id);
+const P      = (id,prop,val) => { const e=el(id); if(e) e.style[prop]=val; };
+
+function toast(msg){
+  const t=el('toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('on'),2400);
+}
+
+// ── PAGE SWITCH ───────────────────────────────────
+function goPage(p){
+  el('page-builder').style.display = p==='builder' ? 'flex' : 'none';
+  el('page-jobs').style.display    = p==='jobs'    ? 'flex' : 'none';
+  el('tab-b').classList.toggle('on', p==='builder');
+  el('tab-j').classList.toggle('on', p==='jobs');
+}
+
+// ── FIELD SYNC ────────────────────────────────────
+function sync(f,v){
+  const m={name:'r-name',title:'r-title',email:'r-email',phone:'r-phone',loc:'r-loc',link:'r-link',sum:'r-sum'};
+  const e=el(m[f]); if(e) e.textContent=v;
+}
+
+// ── SKILLS ────────────────────────────────────────
+function renderSkills(){
+  // chips
+  const cl=el('chip-list'); cl.innerHTML='';
+  const shown = catF==='All' ? skills : skills.filter(s=>s.c===catF);
+  shown.forEach(sk=>{
+    const idx=skills.indexOf(sk);
+    const d=document.createElement('div'); d.className='chip';
+    d.innerHTML=`<span class="cc">[${sk.c}]</span><span>${sk.n}</span><button class="xb" onclick="delSkill(${idx})">×</button>`;
+    cl.appendChild(d);
+  });
+  // quick suggestions
+  const ql=el('qskills'); ql.innerHTML='';
+  const have=new Set(skills.map(s=>s.n.toLowerCase()));
+  SKILLS_DB.filter(s=>!have.has(s.n.toLowerCase())).slice(0,10).forEach(s=>{
+    const b=document.createElement('button'); b.className='qb'; b.textContent='+'+s.n;
+    b.onclick=()=>{skills.push({...s});renderSkills();};
+    ql.appendChild(b);
+  });
+  // resume
+  const rs=el('r-skills'); rs.innerHTML='';
+  const sc=el('c-sk').value;
+  skills.forEach(sk=>{
+    const sp=document.createElement('span'); sp.className='rskl'; sp.contentEditable='true';
+    sp.textContent=sk.n; sp.style.borderColor=sc; sp.style.color=sc;
+    rs.appendChild(sp);
+  });
+}
+
+function setCat(btn){
+  document.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); catF=btn.dataset.cat; renderSkills();
+}
+
+function addSkill(){
+  const inp=el('sk-inp'), cat=el('sk-cat').value, name=inp.value.trim();
+  if(!name) return;
+  if(skills.find(s=>s.n.toLowerCase()===name.toLowerCase())){toast('"'+name+'" already added');return;}
+  skills.push({n:name,c:cat}); inp.value=''; renderSkills(); toast('"'+name+'" added');
+}
+
+function delSkill(i){ skills.splice(i,1); renderSkills(); }
+
+// ── LANGUAGES ─────────────────────────────────────
+function renderLangs(){
+  // panel
+  const ll=el('lang-list'); ll.innerHTML='';
+  langs.forEach((l,i)=>{
+    const row=document.createElement('div'); row.className='lr';
+    row.innerHTML=`<span>${l.n}</span>
+      <select onchange="langs[${i}].l=this.value;renderResumeLangs()">
+        ${['Native','Fluent','Advanced','Intermediate','Basic'].map(v=>`<option${v===l.l?' selected':''}>${v}</option>`).join('')}
+      </select>
+      <button class="lx" onclick="delLang(${i})">✕</button>`;
+    ll.appendChild(row);
+  });
+  renderResumeLangs();
+}
+
+function renderResumeLangs(){
+  const sec=el('r-lang-sec'), c=el('r-langs');
+  if(!langs.length){sec.style.display='none';return;}
+  sec.style.display='';
+  c.innerHTML='';
+  langs.forEach(l=>{
+    const dots=LVL_DOTS[l.l]||3;
+    const d=document.createElement('div'); d.className='rli';
+    d.innerHTML=`<span class="rln" contenteditable>${l.n}</span><span class="rll">${l.l}</span>
+      <div class="rld">${Array.from({length:5},(_,i)=>`<div class="rldot${i<dots?' f':''}" style="border-color:${accent};${i<dots?'background:'+accent:''}"></div>`).join('')}</div>`;
+    c.appendChild(d);
+  });
+}
+
+function addLang(){
+  const inp=el('ln-inp'), lvl=el('ln-lvl').value, name=inp.value.trim();
+  if(!name) return;
+  langs.push({n:name,l:lvl}); inp.value=''; renderLangs(); toast('"'+name+'" added');
+}
+
+function delLang(i){ langs.splice(i,1); renderLangs(); }
+
+function initLangQuick(){
+  const c=el('qlang');
+  LANGS_QK.forEach(l=>{
+    const b=document.createElement('button'); b.className='qb'; b.textContent='+'+l;
+    b.onclick=()=>{ if(!langs.find(x=>x.n===l)){langs.push({n:l,l:'Fluent'});renderLangs();}else toast(l+' already added'); };
+    c.appendChild(b);
+  });
+}
+
+// ── TYPOGRAPHY ────────────────────────────────────
+function setFont(btn){
+  document.querySelectorAll('.fp').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  paper().style.fontFamily=`'${btn.dataset.f}',serif`;
+}
+
+function setBodySz(v){
+  paper().querySelectorAll('.reb,.res,.rc,.red,.rt').forEach(e=>e.style.fontSize=v+'px');
+}
+
+// ── COLORS ────────────────────────────────────────
+function setAccent(v){
+  accent=v;
+  el('r-name').style.color=v;
+  paper().querySelectorAll('.rst').forEach(e=>{e.style.color=v;e.style.borderBottomColor=v;});
+  paper().querySelector('.rc').style.borderBottomColor=v;
+  renderResumeLangs();
+}
+
+function setTagColor(v){
+  paper().querySelectorAll('.rskl').forEach(e=>{e.style.borderColor=v;e.style.color=v;});
+}
+
+// ── TEMPLATES ─────────────────────────────────────
+function applyTpl(key,btn){
+  document.querySelectorAll('.tp').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const t=TPLS[key];
+  const fb=document.querySelector(`[data-f="${t.f}"]`);
+  if(fb) setFont(fb); else paper().style.fontFamily=`'${t.f}',sans-serif`;
+  el('c-ac').value=t.ac; setAccent(t.ac);
+  el('c-tx').value=t.tx; paper().style.color=t.tx;
+  el('c-bg').value=t.bg; paper().style.background=t.bg;
+  el('c-sk').value=t.sk; setTagColor(t.sk);
+  toast(key[0].toUpperCase()+key.slice(1)+' template applied');
+}
+
+// ── ADD ROWS ──────────────────────────────────────
+function addExp(){
+  const s=el('sec-exp'),b=s.querySelector('.aeb');
+  const e=document.createElement('div'); e.className='re';
+  e.innerHTML=`<div class="reh"><div class="ret" contenteditable>Job Title</div><div class="red" contenteditable>Year — Year</div></div><div class="res" contenteditable>Company · Type · Location</div><div class="reb" contenteditable>Describe your key achievements here…</div>`;
+  s.insertBefore(e,b); e.querySelector('[contenteditable]').focus();
+}
+
+function addEdu(){
+  const s=el('sec-edu'),b=s.querySelector('.aeb');
+  const e=document.createElement('div'); e.className='re';
+  e.innerHTML=`<div class="reh"><div class="ret" contenteditable>Degree / Certification</div><div class="red" contenteditable>Year — Year</div></div><div class="res" contenteditable>Institution · Location</div><div class="reb" contenteditable>Relevant coursework, honors…</div>`;
+  s.insertBefore(e,b); e.querySelector('[contenteditable]').focus();
+}
+
+// ── EXPORT ────────────────────────────────────────
+function exportPDF(){
+  const p=paper();
+  p.querySelectorAll('.aeb').forEach(b=>b.style.display='none');
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head><title>Resume</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Lato:wght@300;400;700&family=Merriweather:wght@400;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>body{margin:0;padding:0}@media print{body{-webkit-print-color-adjust:exact;color-adjust:exact}}.aeb{display:none!important}[contenteditable]{outline:none}</style>
+  </head><body>${p.outerHTML}</body></html>`);
+  w.document.close(); setTimeout(()=>w.print(),700);
+  p.querySelectorAll('.aeb').forEach(b=>b.style.display='');
+}
+
+// ── JOB MATCH ─────────────────────────────────────
+async function findJobs(){
+  const btn=el('abtn');
+  btn.disabled=true; btn.textContent='⏳ Analyzing…';
+  const txt=paper().innerText.replace(/\+\s*Add.*/g,'').trim();
+  el('jout').innerHTML=`<div class="spin-box"><div class="spin"></div><p style="color:var(--mu)">Scanning your resume…</p></div>`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:2000,
+        messages:[{role:'user',content:`Analyze this resume. Return ONLY a raw JSON array (no markdown, no text before or after) of 9 job matches. Each item: {"title":"","company":"","match":85,"location":"","type":"Full-time","salary":"$100k-$130k","tags":["skill1","skill2","skill3"],"description":"1-2 sentence description"}. Sort by match desc.\n\nResume:\n${txt.slice(0,3000)}`}]
+      })
+    });
+    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'HTTP '+res.status);}
+    const data=await res.json();
+    const raw=data.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
+    const jobs=JSON.parse(raw);
+    el('ap').textContent=`Found ${jobs.length} roles matching your profile — sorted by best fit.`;
+    renderJobs(jobs);
+  }catch(err){
+    el('jout').innerHTML=`<div style="text-align:center;padding:2.5rem;color:var(--mu)"><div style="font-size:2.2rem;margin-bottom:.6rem">⚠️</div><div style="color:var(--tx);font-weight:600;margin-bottom:.4rem">Could not fetch matches</div><p style="font-size:.82rem">${err.message}</p></div>`;
+  }
+  btn.disabled=false; btn.textContent='🔄 Re-analyze';
+}
+
+function renderJobs(jobs){
+  if(!jobs?.length){el('jout').innerHTML='<p style="text-align:center;color:var(--mu);padding:2rem">No matches found.</p>';return;}
+  const g=document.createElement('div'); g.className='jgrid';
+  jobs.forEach((j,i)=>{
+    const c=document.createElement('div'); c.className='jcard'; c.style.animationDelay=(i*.06)+'s';
+    c.innerHTML=`
+      <div class="jct"><div><div class="jtl">${j.title||''}</div><div class="jco">${j.company||''}</div></div><div class="mb">${j.match||''}%</div></div>
+      <div class="jtags">${(j.tags||[]).map(t=>`<span class="jtag">${t}</span>`).join('')}</div>
+      <div class="jdesc">${j.description||''}</div>
+      <div class="jmeta"><span>📍${j.location||''}</span><span>💼${j.type||''}</span><span>💰${j.salary||''}</span></div>
+      <button class="apb" onclick="toast('Opening ${(j.title||'').replace(/'/g,"\\'")} application…')">Apply Now →</button>`;
+    g.appendChild(c);
+  });
+  el('jout').innerHTML=''; el('jout').appendChild(g);
+}
+
+// ── INIT ──────────────────────────────────────────
+renderSkills();
+renderLangs();
+initLangQuick();
+setAccent('#1a3a5c');
+</script>
+</body>
+</html>
